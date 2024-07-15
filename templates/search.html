@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Breweries</title>
+</head>
+<body>
+    <h2>Search Breweries</h2>
+    <form method="get" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Search for breweries...">
+        <select name="by">
+            <option value="city">City</option>
+            <option value="name">Name</option>
+            <option value="type">Type</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if breweries %}
+        <ul>
+            {% for brewery in breweries %}
+                <li>
+                    <a href="{% url 'brewery_detail' brewery.id %}">{{ brewery.name }}</a><br>
+                    {{ brewery.street }}<br>
+                    {{ brewery.city }}, {{ brewery.state }}<br>
+                    {{ brewery.phone }}<br>
+                    <a href="{{ brewery.website_url }}" target="_blank">{{ brewery.website_url }}</a><br>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No breweries found.</p>
+    {% endif %}
+</body>
+</html>
